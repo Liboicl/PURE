@@ -1,0 +1,50 @@
+#!/bin/sh
+# Save working directory
+old=$PWD
+if [ -f "./PURE.cfg" ];then
+	source ./PURE.cfg
+fi
+dir=${PLUGIN_DIR:-"./plugins/"}
+cd $dir
+if [ $(ls *.so 2>/dev/null | wc -l) -gt 0 ];then
+	plugin=$(zenity --title "PURE Interface" --column "Select Plugin" --list \
+	$(for file in *.so; do if [ -f "$file" ];then echo "$file";fi;done))
+	cd $old
+	
+	# Remove incompatible gadget modules
+	modules="$(lsmod | awk '{print $1}' | xargs echo)"
+	blacklist="g_zero g_audio g_ether g_serial g_midi gadgetfs g_file_storage
+		g_mass_storage g_printer g_cdc g_multi g_hid g_dbgp g_nokia g_webcam g_ncm g_acm_ms"
+	restore_list=""
+	for mod in $modules; do
+		if echo $blacklist | grep -q "\<$mod\>"; then
+			restore_list="$restore_list $mod"
+			rmmod $mod
+			sleep 1
+		fi
+	done
+	
+	# Perform initial setup
+	mkdir /dev/gadget
+	modprobe gadgetfs
+	mount -t gadgetfs gadgetfs /dev/gadget
+	
+	./PURE $plugin &
+	
+	PURE=$!
+	
+	zenity --title "PURE Interface" --info --text "$plugin loaded. Click OK to unload."
+	
+	# Perform cleanup
+	kill $!
+	sleep 1
+	umount /dev/gadget
+	rmdir /dev/gadget
+	rmmod gadgetfs
+	if [ -n "$restore_list" ]; then
+		sleep 1
+		modprobe $restore_list
+	fi
+else
+	zenity --title "PURE Interface" --error --text "No plugins found in $dir"
+fi

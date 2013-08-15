@@ -1,0 +1,9 @@
+#define PAN_BUT 0
+#define PAN_A 278
+#define PAN_B 279
+#define PAN_Y 280
+#define PAN_X 281
+#define PAN_L 303
+#define PAN_R 305
+#define PAN_SELECT 306
+#define PAN_START 308
