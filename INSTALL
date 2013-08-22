@@ -1,0 +1,10 @@
+Type the command underneath your desired action.
+
+* Standard Version
+ make
+	
+* Debug Version
+ make debug
+	
+* Clean Source Directory
+ make clean

@@ -1,3 +1,22 @@
+/*
+ * Core PURE Functionality
+ * 
+ * Copyright (C) 2013 Christopher Cope
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see {http://www.gnu.org/licenses/}.
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <fcntl.h>
@@ -271,11 +290,18 @@ ep_config (char *name, const char *label,
 static void *simple_source_thread (char *name, int status)
 {
 	char		buf [USB_BUFSIZE];
+	int			total=*plugin.iosize;
 
 	if(verbose) printf("%s sending event\n", name);
 
 	memcpy(buf,(*plugin.getReport)(),*plugin.iosize);
-	status = write (source_fd, buf, *plugin.iosize);
+	while(total>0){
+		if(total>=49)
+			status = write (source_fd, buf, 49);
+		else
+			status = write (source_fd, buf, total);
+		total-=49;
+	}
 	if(verbose) printf("%s sent event %d %m\n", name, status);
 
 	if (status >= 0) {

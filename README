@@ -1,0 +1,59 @@
+* Compiling
+	Refer to the included INSTALL file.
+
+* License
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	
+* Pull Requests
+	Any code in a pull request must be licensed using GPLv3, or 
+	(at your option) any later version.
+	
+* Commit Access
+	If you have several accepted, high quality, pull requests, you will
+	likely be granted commit access to the repository.
+	
+* Writing Plugins
+	Todo
+	Feel free to look at the already wrote plugins and work form those.
+	I plan on writing a formal tutorial explaining them in a bit more 
+	detail.
+	
+* Code Format
+	Todo
+	I plan to define certain guidelines to keep the project consistent. For
+	now, please try to follow the previous code style. Code clean up is in
+	order as well.
+	
+* Todo`s
+	This is an incomplete list of planned features. If you wish to 
+	contribute, this is a great place to start. They are roughly organized
+	based on difficulty.
+	
+	%Easy%
+	- Better error handling on plugin loading, including ignoring missing
+	  info that is optional.
+	
+	%Moderate%
+	- Write Manuals for Plugin Writing & Code Formatting.
+	- Implement the PS3 plugin as an "official" Sony product.
+	- Write a helper library for plugins to handle basic repetitive tasks,
+	  such as receiving input.
+	- Add more to configuration file, including key mapping. Likely define
+	  all keys in a header with user friendly names.
+	
+	%Difficult%
+	- Allow multiple plugins at once; This will require a good amount of
+	  code rewriting.
+	
+	
